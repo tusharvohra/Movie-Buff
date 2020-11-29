@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun callApi() {
-//        mainViewModel.searchById("tt3896198")
-        mainViewModel.searchById("superman")
+        mainViewModel.searchById("tt3896198")
     }
 
     fun initObserver() {
