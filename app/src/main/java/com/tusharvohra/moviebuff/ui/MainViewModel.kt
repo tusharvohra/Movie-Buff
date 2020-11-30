@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tusharvohra.moviebuff.data.ApiService
-import com.tusharvohra.moviebuff.data.MovieResponse
+import com.tusharvohra.moviebuff.data.model.movie.MovieResponse
+import com.tusharvohra.moviebuff.data.model.search.SearchResponse
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -64,6 +65,24 @@ class MainViewModel : ViewModel() {
                 if (it.isSuccessful) {
                     it.body()?.let { movie ->
                         movieLiveData.postValue(movie)
+                    }
+                } else {
+                    Log.i("APPDATA", "error code: ${it.code()}")
+                }
+            }
+        }
+    }
+
+    private val searchResponseMutableLiveData = MutableLiveData<SearchResponse>()
+    val searchMovieList: LiveData<SearchResponse>
+        get() = searchResponseMutableLiveData
+
+    fun searchMovies(name: String) {
+        viewModelScope.launch {
+            apiService.searchMovies("82093993", name).let {
+                if (it.isSuccessful) {
+                    it.body()?.let { data ->
+                        searchResponseMutableLiveData.postValue(data)
                     }
                 } else {
                     Log.i("APPDATA", "error code: ${it.code()}")

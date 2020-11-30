@@ -1,38 +1,58 @@
 package com.tusharvohra.moviebuff.ui
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.tusharvohra.moviebuff.R
+import com.tusharvohra.moviebuff.data.model.movie.MovieResponse
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
     val mainViewModel = MainViewModel()
 
-    private lateinit var test: TextView
+    private lateinit var gridLayoutManager: GridLayoutManager
+
+    private lateinit var movieListAdapter: MovieListAdapter
+
+    var movieList = ArrayList<MovieResponse>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        test = findViewById(R.id.tv_test)
-
-        callApi()
+        initAdapter()
         initObserver()
+        callApi()
 
     }
 
     private fun callApi() {
         mainViewModel.searchById("tt3896198")
+        mainViewModel.searchByTitle("kung fu panda")
+        mainViewModel.searchByTitle("up")
+        mainViewModel.searchById("tt2911666")
+        mainViewModel.searchByTitle("lincoln")
+        mainViewModel.searchByTitle("insidious")
+        mainViewModel.searchByTitle("schindler's list")
+        mainViewModel.searchByTitle("lights out")
+        mainViewModel.searchByTitle("mud")
+        mainViewModel.searchByTitle("spotlight")
     }
 
-    fun initObserver() {
-        mainViewModel.movieList.observe(this, Observer { movie ->
-            test.text =
-                movie.actors + movie.director + movie.country + movie.awards + movie.title + movie.genre +
-                        movie.language + movie.plot + movie.released + movie.writer
+    private fun initObserver() {
+        mainViewModel.movieList.observe(this, { movie ->
+            movieList.add(movie)
+            movieListAdapter.notifyDataSetChanged()
         })
+    }
+
+    private fun initAdapter() {
+        gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        rv_movie_list.layoutManager = gridLayoutManager
+        movieListAdapter = MovieListAdapter(movieList)
+        rv_movie_list.adapter = movieListAdapter
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_4sdp"
+    android:layout_marginTop="@dimen/_6sdp"
+    android:layout_marginEnd="@dimen/_4sdp"
+    android:background="@drawable/movie_item_background"
+    android:elevation="@dimen/_3sdp"
+    android:padding="@dimen/_3sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_poster"
+        android:layout_width="@dimen/_135sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/_90sdp"
+        android:text="Superman"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="@+id/iv_poster"
+        app:layout_constraintTop_toBottomOf="@+id/iv_poster" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="year: 2002"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/iv_poster"
+        app:layout_constraintTop_toBottomOf="@id/iv_poster" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_director"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:text="Directed by: James Gunn"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/tv_year"
+        app:layout_constraintStart_toStartOf="@+id/tv_movie_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

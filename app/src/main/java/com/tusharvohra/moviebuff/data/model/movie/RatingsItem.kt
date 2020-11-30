@@ -1,4 +1,4 @@
-package com.tusharvohra.moviebuff.data
+package com.tusharvohra.moviebuff.data.model.movie
 
 import com.google.gson.annotations.SerializedName
 
