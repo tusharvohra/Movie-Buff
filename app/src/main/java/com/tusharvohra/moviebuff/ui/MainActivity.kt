@@ -10,13 +10,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val mainViewModel = MainViewModel()
+    private val mainViewModel = MainViewModel()
 
     private lateinit var gridLayoutManager: GridLayoutManager
 
     private lateinit var movieListAdapter: MovieListAdapter
 
-    var movieList = ArrayList<MovieResponse>()
+    private var movieList = ArrayList<MovieResponse>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
