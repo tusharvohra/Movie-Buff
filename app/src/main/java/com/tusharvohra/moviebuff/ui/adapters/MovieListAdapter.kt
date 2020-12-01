@@ -1,4 +1,4 @@
-package com.tusharvohra.moviebuff.ui
+package com.tusharvohra.moviebuff.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View

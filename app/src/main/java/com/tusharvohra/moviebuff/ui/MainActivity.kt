@@ -1,10 +1,15 @@
 package com.tusharvohra.moviebuff.ui
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tusharvohra.moviebuff.R
 import com.tusharvohra.moviebuff.data.model.movie.MovieResponse
+import com.tusharvohra.moviebuff.ui.adapters.MovieListAdapter
+import com.tusharvohra.moviebuff.ui.fragments.SearchResultFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -23,9 +28,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initView()
         initAdapter()
         initObserver()
         callApi()
+
+    }
+
+    private fun initView() {
+
+        et_search.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (et_search.text == null) {
+                    Toast.makeText(this, "Enter a movie name", Toast.LENGTH_SHORT).show()
+                } else {
+                    supportFragmentManager.beginTransaction()
+                        .add(
+                            R.id.fl_parent,
+                            SearchResultFragment.newInstance(et_search.text.toString())
+                        )
+                        .addToBackStack(SearchResultFragment::class.java.name)
+                        .commit()
+                    return@OnEditorActionListener true
+                }
+            }
+            false
+        })
 
     }
 
