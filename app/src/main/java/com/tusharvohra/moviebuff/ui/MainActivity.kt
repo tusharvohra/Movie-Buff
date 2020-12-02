@@ -1,21 +1,24 @@
 package com.tusharvohra.moviebuff.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tusharvohra.moviebuff.R
 import com.tusharvohra.moviebuff.data.model.movie.MovieResponse
 import com.tusharvohra.moviebuff.ui.adapters.MovieListAdapter
 import com.tusharvohra.moviebuff.ui.fragments.SearchResultFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel = MainViewModel()
+    private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var gridLayoutManager: GridLayoutManager
 
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         et_search.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (et_search.text == null) {
+                if (et_search.text.toString() == "") {
                     Toast.makeText(this, "Enter a movie name", Toast.LENGTH_SHORT).show()
                 } else {
                     supportFragmentManager.beginTransaction()
@@ -73,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     private fun initObserver() {
         mainViewModel.movieList.observe(this, { movie ->
             movieList.add(movie)
+            Log.i("APPDATA", movie.title)
             movieListAdapter.notifyDataSetChanged()
         })
     }

@@ -5,22 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tusharvohra.moviebuff.R
 import com.tusharvohra.moviebuff.data.model.search.Search
 import com.tusharvohra.moviebuff.ui.MainViewModel
 import com.tusharvohra.moviebuff.ui.adapters.MovieSearchAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_result.*
 
 private const val NAME = "param1"
 
+@AndroidEntryPoint
 class SearchResultFragment : Fragment() {
 
     private var name: String? = null
 
-    private val mainViewModel = MainViewModel()
+    private val mainViewModel: MainViewModel by viewModels()
 
-    lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private var movieSearchList = ArrayList<Search>()
 
@@ -60,7 +63,7 @@ class SearchResultFragment : Fragment() {
             }
     }
 
-    private fun initView(){
+    private fun initView() {
         tv_search_results.text = "Search results for: '$name' :"
     }
 
@@ -72,7 +75,6 @@ class SearchResultFragment : Fragment() {
         mainViewModel.searchMovieList.observe(viewLifecycleOwner, {
             movieSearchList.addAll(it.Search)
             movieSearchAdapter.notifyDataSetChanged()
-//            tv_test.text = it.Search[0].Title + it.Search[0].Year + it.Search[1].Title + it.Search[1].Year + it.Search[2].Title + it.Search[2].Year
         })
     }
 
