@@ -1,8 +1,11 @@
 package com.tusharvohra.moviebuff.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -38,13 +41,38 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun closeKeyBoard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
     private fun initView() {
+
+        iv_search.setOnClickListener {
+            if (et_search.text.toString() == "" || et_search.text == null) {
+                Toast.makeText(this, "Enter a movie name", Toast.LENGTH_SHORT).show()
+            } else {
+                closeKeyBoard()
+                supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.fl_parent,
+                        SearchResultFragment.newInstance(et_search.text.toString())
+                    )
+                    .addToBackStack(SearchResultFragment::class.java.name)
+                    .commit()
+            }
+        }
 
         et_search.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (et_search.text.toString() == "") {
                     Toast.makeText(this, "Enter a movie name", Toast.LENGTH_SHORT).show()
                 } else {
+                    closeKeyBoard()
                     supportFragmentManager.beginTransaction()
                         .add(
                             R.id.fl_parent,
